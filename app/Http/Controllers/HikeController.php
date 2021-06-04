@@ -75,8 +75,8 @@ class HikeController extends Controller
             $temp=$main1->temp;
         }*/
 
-        //return $forecast['weather'];
-        
+        //return $forecast['weather']; 
+          
 
         return view('client.destination-item',['trail'=>$trail, 'id'=>$id]);
     }
