@@ -22,7 +22,9 @@ use App\Http\Controllers\IndexController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/index1', function () {
+    return view('client.index1');
+});
 
 //Route::get('/fetch', [WeatherAPI::class, 'fetch']);
 //Route::get('/outdoor', [OutdoorActivitiesAPI::class, 'outdoorActivities']);
