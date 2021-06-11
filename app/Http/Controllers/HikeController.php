@@ -72,16 +72,16 @@ class HikeController extends Controller
         $clotheSuggestion2=null;
 
         switch ($main) {
-            case str_contains($main,'Cloud'):
+            case (str_contains($main,'Cloud') || str_contains($main,'Clear')) && $temp>25:
                 $overallSuggestion='Suggested';
-                $clotheSuggestion1='Wear light clothes but make sure to take a jacket. It might get chilly at the top';
-                $clotheSuggestion2='Dont use umbrellas';
-                break;
-            
-            case str_contains($main,'Clear'):
-                $overallSuggestion='Highly Suggested';
-                $clotheSuggestion1='Wear light clothes';
+                $clotheSuggestion1='Wear as light as possible';
                 $clotheSuggestion2='Avoid taking jackets or clothes with many layers';
+                break;
+
+            case (str_contains($main,'Cloud') || str_contains($main,'Clear'))  && $temp<25:
+                $overallSuggestion='Suggested';
+                $clotheSuggestion1='Wear light clothes';
+                $clotheSuggestion2='It might get chilly at the top';
                 break;
 
             case str_contains($main,'Rain'):
