@@ -54,31 +54,52 @@ class HikeController extends Controller
 
           $response1 = Http::get('api.openweathermap.org/data/2.5/weather',[
             'q'=>$city,
+            'units'=>'metric',
             'appid'=>'9d53e3e29e217be89757b264c15c09c0'
             ]);
 
-        $weather = json_decode($response1,true);
+        $weather = json_decode($response1);
 
-        $id=$weather['id'];
+        $id=$weather->id;
+        $weathertag=$weather->weather;
+        $maintag=$weather->main;
+            
+        $main= $weathertag[0]->main;
+        $temp=$maintag->temp;
 
-        //$forecast=json_decode($response1,true);
-        
-        /*$weather=$forecast['weather'];
-        //$description=$weather[];
-        $temp=$forecast['main']['temp'];
-        
-        
-        /*foreach ($forecast['weather'] as $weather) {
-            $main=$weather->main;
+        $overallSuggestion=null;
+        $clotheSuggestion1=null;
+        $clotheSuggestion2=null;
+
+        switch ($main) {
+            case str_contains($main,'Cloud'):
+                $overallSuggestion='Suggested';
+                $clotheSuggestion1='Wear light clothes but make sure to take a jacket. It might get chilly at the top';
+                $clotheSuggestion2='Dont use umbrellas';
+                break;
+            
+            case str_contains($main,'Clear'):
+                $overallSuggestion='Highly Suggested';
+                $clotheSuggestion1='Wear light clothes';
+                $clotheSuggestion2='Avoid taking jackets or clothes with many layers';
+                break;
+
+            case str_contains($main,'Rain'):
+                $overallSuggestion='Not Suggested';
+                $clotheSuggestion1='Make sure to take a raincoat and umbrella';
+                $clotheSuggestion2='Avoid wearing light clothes';
+                break; 
+            
+            default:
+                $overallSuggestion='No information';
+                $clotheSuggestion1='No information';
+                $clotheSuggestion2='No information';
+                break;
         }
-        foreach ($forecast->main as $main1) {
-            $temp=$main1->temp;
-        }*/
 
-        //return $forecast['weather']; 
-          
-
-        return view('client.destination-item',['trail'=>$trail, 'id'=>$id]);
+        
+  
+        return view('client.destination-item',['trail'=>$trail, 'id'=>$id, 'overallSuggestion'=>$overallSuggestion, 'clotheSuggestion1'=>$clotheSuggestion1, 'clotheSuggestion2'=>$clotheSuggestion2 ]);
     }
 
     

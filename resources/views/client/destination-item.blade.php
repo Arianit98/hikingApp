@@ -28,7 +28,6 @@
                             <div id="openweathermap-widget-11" style="float: left;">
                             </div>
                                 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script><script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '{{$id}}',appid: '9d53e3e29e217be89757b264c15c09c0',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
-                        
                             <div class="col-lg-6" style="margin-left: 5px; margin-bottom:50px">
                                 <iframe
                                     width="500"
@@ -39,38 +38,34 @@
                                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDSElvjHlPXNKGvhfQE5XUraGIUJ8JjxM4
                                         &q={{str_replace(" ","+",$trail->name)}}">
                                 </iframe>
-                                
                             </div>
                         </div>
-                        
-                        <!--<div class="container-fluid px-1 px-md-4 py-5 mx-auto">
-                            <div class="row d-flex justify-content-center px-3">
-                                <div class="card">
-                                    <h2 class="ml-auto mr-4 mt-3 mb-0">{{$trail->name}}</h2>
-                                    <p class="ml-auto mr-4 mb-0 med-font">$desc</p>
-                                    <h1 class="ml-auto mr-4 large-font">$temp Fahrenheit</h1>
-                                    <p class="time-font mb-0 ml-4 mt-auto"> <span class="sm-font">AM</span></p>
-                                    <p class="ml-4 mb-4"></p>
+                    </div>
+                     <!-- Suggestion-->
+                     <div class="col-lg-6 col-xl-4">
+                            <div class="card mb-5 mb-xl-0" style="width: 600px;">
+                                <div class="card-body p-5">
+                                    
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">{{$overallSuggestion}}</span>
+                                        
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{{$clotheSuggestion1}}</strong>
+                                        </li>
+                                        <li class="mb-2 text-muted">
+                                            <i class="bi bi-x"></i>
+                                            {{$clotheSuggestion2}}
+                                        </li>
+                                        
+                                    </ul>
+                                    
                                 </div>
                             </div>
-                        </div>-->
-                       
-                    </div>
-                     <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="text-center mb-5">
-                                <p class="lead fw-normal text-muted">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam deserunt architecto enim eos accusantium fugit recusandae illo iste dignissimos possimus facere ducimus odit voluptatibus exercitationem, ex laudantium illum voluptatum corporis.</p>
-                            </div>
                         </div>
-                    </div>
                 </div>
             </section>
 
 @endsection
-
-@push('js-scripts')
-<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
-@endpush
-@push('js-jquery')
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-@endpush
