@@ -22,28 +22,12 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Image/Weather/Maps-->
                     <div class="row gx-5">
                         <div class="col-12"><img style="width: 1300px; height: 700px;" class="img-fluid rounded-3 mb-5" src={{$trail->largeImgURL}} alt="..." /></div>
-                        <div class="weatherMaps" style="display: flex; flex-direction:row">
-                            <div id="openweathermap-widget-11" style="float: left;">
-                            </div>
-                                <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script><script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '{{$id}}',appid: '9d53e3e29e217be89757b264c15c09c0',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
-                            <div class="col-lg-6" style="margin-left: 5px; margin-bottom:50px">
-                                <iframe
-                                    width="500"
-                                    height="234"
-                                    style="border:0"
-                                    loading="lazy"
-                                    allowfullscreen
-                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDSElvjHlPXNKGvhfQE5XUraGIUJ8JjxM4
-                                        &q={{str_replace(" ","+",$trail->name)}}">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Suggestion-->
-                     <div class="col-lg-6 col-xl-4">
-                            <div class="card mb-5 mb-xl-0" style="width: 600px;">
+                        <!-- Suggestion-->
+                        <div class="col-lg-6 col-xl-4" style="position: absolute;">
+                            <div class="card mb-5 mb-xl-0" style="width: 400px; opacity:0.85;">
                                 <div class="card-body p-5">
                                     
                                     <div class="mb-3">
@@ -65,6 +49,26 @@
                                 </div>
                             </div>
                         </div>
+                    </div> 
+                    <div class="row gx-5">  
+                        <div class="weatherMaps" style="display: flex; flex-direction:row">
+                            <div id="openweathermap-widget-11" style="float: left;">
+                            </div>
+                                <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script><script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '{{$id}}',appid: '9d53e3e29e217be89757b264c15c09c0',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+                            <div class="col-lg-6" style="margin-left: 5px; margin-bottom:50px">
+                                <iframe
+                                    width="500"
+                                    height="234"
+                                    style="border:0"
+                                    loading="lazy"
+                                    allowfullscreen
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDSElvjHlPXNKGvhfQE5XUraGIUJ8JjxM4
+                                        &q={{str_replace(" ","+",$trail->name)}}">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                        
                 </div>
             </section>
 
