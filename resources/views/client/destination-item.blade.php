@@ -23,33 +23,6 @@
                         </div>
                     </div>
                     <!-- Image/Weather/Maps-->
-                    <div class="row gx-5">
-                        <div class="col-12"><img style="width: 1300px; height: 700px;" class="img-fluid rounded-3 mb-5" src={{$trail->largeImgURL}} alt="..." /></div>
-                        <!-- Suggestion-->
-                        <div class="col-lg-6 col-xl-4" style="position: absolute;">
-                            <div class="card mb-5 mb-xl-0" style="width: 400px; opacity:0.85;">
-                                <div class="card-body p-5">
-                                    
-                                    <div class="mb-3">
-                                        <span class="display-4 fw-bold">{{$overallSuggestion}}</span>
-                                        
-                                    </div>
-                                    <ul class="list-unstyled mb-4">
-                                        <li class="mb-2">
-                                            <i class="bi bi-check text-primary"></i>
-                                            <strong>{{$clotheSuggestion1}}</strong>
-                                        </li>
-                                        <li class="mb-2 text-muted">
-                                            <i class="bi bi-x"></i>
-                                            {{$clotheSuggestion2}}
-                                        </li>
-                                        
-                                    </ul>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
                     <div class="row gx-5">  
                         <div class="weatherMaps" style="display: flex; flex-direction:row">
                             <div id="openweathermap-widget-11" style="float: left;">
@@ -68,6 +41,44 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row gx-5">
+                        <div class="col-12"><img style="width: 1300px; height: 700px;" class="img-fluid rounded-3 mb-5" src={{$trail->largeImgURL}} alt="..." /></div>
+                        <!-- Suggestion-->
+                        <div class="col-lg-6 col-xl-4" style="position: absolute;">
+                            <div class="card mb-5 mb-xl-0" style="width: 500px; opacity:0.9;">
+                                <div class="card-body p-5">
+                                    
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">{{$overallSuggestion}}</span>
+                                        
+                                    </div>
+
+                                    
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{{$difficulitySuggestion}}</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{{$clotheSuggestion1}}</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{{$clotheSuggestion3}}</strong>
+                                        </li>
+                                        <li class="mb-2 text-muted">
+                                            <i class="bi bi-x"></i>
+                                            {{$clotheSuggestion2}}
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
                         
                 </div>
             </section>

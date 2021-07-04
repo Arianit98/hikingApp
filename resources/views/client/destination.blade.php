@@ -38,7 +38,7 @@
                         <div class="col-lg-8 col-xl-6">
                             <div class="text-center">
                                 <h2 class="fw-bolder">Trails in {{$hikingDestination}}</h2>
-                                <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+                                <p class="lead fw-normal text-muted mb-5"></p>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,8 @@
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
                                     <a class="text-decoration-none link-dark stretched-link" href="{{route('Hike.destination-item',[$trail->id])}}"><h5 class="card-title mb-3">{{$trail->name}}</h5></a>
-                                    <p class="card-text mb-0">Difficulity : {{$trail->difficulty}}</p>
+                                    <p class="card-text mb-0">Difficulity : {{$trail->difficulty}}/5</p>
+                                    <p class="card-text mb-0">Availability : {{$trail->hours}}</p>
                                 </div>
     
                             </div>
