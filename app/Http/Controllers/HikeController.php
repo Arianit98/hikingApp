@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Attribute;
+use Illuminate\Support\Facades\DB;
 
 class HikeController extends Controller
 {
     public function index()
-    {
+    {   
+        $users = DB::select('select name from users where id = :id', ['id' => 1]);
         return view('client.index');
     }
 
@@ -27,37 +29,139 @@ class HikeController extends Controller
     public function destination(Request $request)
     {
         $hikingDestination = $request['hikingDestination'];
+        $searchCity=DB::select('select * from requestsByCity where city = :city', ['city' => $hikingDestination]);
+               
 
-        $response = Http::get('https://prescriptiontrails.org/api/filter/',[
-            'by'=>'city',
-            'city'=>$hikingDestination,
-            'offset'=>0,
-            'count'=>10
-            ]);
-        
-        
+        if ($searchCity != null) {
+
+            $searchedAt=DB::select('select created from requestsByCity where city = :city', ['city' => $hikingDestination]);
+            $currentTime=date("Y-m-d h:i:s");
+            $diff = abs(strtotime($searchedAt[0]->created) - strtotime($currentTime));
+            $years   = floor($diff / (365*60*60*24)); 
+            $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+            $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60)); 
+            $minutes  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60); 
+
+            if ($hours<24) {
+                $result=DB::select('select apiResponse from requestsByCity where city = :city', ['city' => $hikingDestination]);
+                $response=$result[0]->apiResponse;
+            }
+            else {
+
+                $response = Http::get('https://prescriptiontrails.org/api/filter/',[
+                    'by'=>'city',
+                    'city'=>$hikingDestination,
+                    'offset'=>0,
+                    'count'=>10
+                    ]);
+                
+                DB::update('update requestsByCity set apiResponse=?,created=? where city=?', [$response,$currentTime,$hikingDestination]);
+            }
+            
+        }
+
+        else {
+            $response = Http::get('https://prescriptiontrails.org/api/filter/',[
+                'by'=>'city',
+                'city'=>$hikingDestination,
+                'offset'=>0,
+                'count'=>10
+                ]);
+            
+            DB::insert('insert into requestsByCity (city, created, apiResponse) values (?,?,?)',[$hikingDestination, date("Y-m-d h:i:s"), $response]);
+        }
+
         $hikingPlaces=json_decode($response);
         
-
         return view('client.destination', ['hikingDestination'=>$hikingDestination,'hikingPlaces'=>$hikingPlaces]);
     }
 
     public function destination_item($id)
     {
-        $response = Http::get('https://prescriptiontrails.org/api/trail/',[
-            'id'=>$id
-            ]);
+        $searchTrail=DB::select('select * from requestsbytrailid where id = ?', [$id]);
 
+        if ($searchTrail != null) {
+
+            $searchedAt=DB::select('select created from requestsbytrailid where id = ?', [ $id]);
+            $currentTime=date("Y-m-d h:i:s");
+            $diff = abs(strtotime($searchedAt[0]->created) - strtotime($currentTime));
+            $years   = floor($diff / (365*60*60*24)); 
+            $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+            $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60)); 
+            $minutes  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60); 
+
+            if ($hours<24) {
+                $result=DB::select('select apiResponse from requestsbytrailid where  id = ?', [$id]);
+                $response=$result[0]->apiResponse;
+            }
+            else {
+
+                $response = Http::get('https://prescriptiontrails.org/api/trail/',[
+                    'id'=>$id
+                    ]);
+                
+                DB::update('update requestsbytrailid set apiResponse=?,created=? where id=?', [$response,$currentTime,$id]);
+            }
+            
+        }
+
+        else {
+            $response = Http::get('https://prescriptiontrails.org/api/trail/',[
+                'id'=>$id
+                ]);
+            DB::insert('insert into requestsbytrailid (id, created, apiResponse) values (?,?,?)',[$id, date("Y-m-d h:i:s"), $response]);
+        }
+
+        
         $trail=json_decode($response);
 
+    
         $city=$trail->city;
         $difficulity=$trail->difficulty;
 
-          $response1 = Http::get('api.openweathermap.org/data/2.5/weather',[
-            'q'=>$city,
-            'units'=>'metric',
-            'appid'=>'9d53e3e29e217be89757b264c15c09c0'
-            ]);
+        $searchWeatherCity=DB::select('select * from weatherRequests where city = :city', ['city' => $city]);
+               
+
+        if ($searchWeatherCity != null) {
+
+            $searchedAt=DB::select('select created from weatherRequests where city = :city', ['city' => $city]);
+            $currentTime=date("Y-m-d h:i:s");
+            $diff = abs(strtotime($searchedAt[0]->created) - strtotime($currentTime));
+            $years   = floor($diff / (365*60*60*24)); 
+            $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+            $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60)); 
+            $minutes  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60); 
+
+            if ($minutes<10) {
+                $result=DB::select('select apiResponse from weatherRequests where city = :city', ['city' => $city]);
+                $response1=$result[0]->apiResponse;
+            }
+            else {
+
+                $response1 = Http::get('api.openweathermap.org/data/2.5/weather',[
+                    'q'=>$city,
+                    'units'=>'metric',
+                    'appid'=>'9d53e3e29e217be89757b264c15c09c0'
+                    ]);
+                
+                DB::update('update weatherRequests set apiResponse=?,created=? where city=?', [$response1,$currentTime,$city]);
+            }
+            
+        }
+
+        else {
+            $response1 = Http::get('api.openweathermap.org/data/2.5/weather',[
+                'q'=>$city,
+                'units'=>'metric',
+                'appid'=>'9d53e3e29e217be89757b264c15c09c0'
+                ]);
+            
+            
+            DB::insert('insert into weatherRequests (city, created, apiResponse) values (?,?,?)',[$city, date("Y-m-d h:i:s"), $response1]);
+        }
 
         $weather = json_decode($response1);
 

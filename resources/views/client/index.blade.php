@@ -45,7 +45,6 @@
                                             <input type="submit" class="btn btn-outline-light btn-lg px-4" value="Search" href="#!">Search</a>
                                         </div>
                                     </form> 
-                                
                             </div>
                         </div>
                         <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="{{asset('assets/landscape.jpg')}}" alt="..." /></div>
